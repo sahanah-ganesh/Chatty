@@ -21,6 +21,7 @@ class App extends Component {
         }
       ]
     }
+    this.addMessage = this.addMessage.bind(this);
   }
   componentDidMount() {
     console.log('componentDidMount <App />');
@@ -35,6 +36,20 @@ class App extends Component {
     }, 3000);
   }
 
+  addMessage(evt) {
+    if (evt.key === 'Enter') {
+      let newID = Math.floor((Math.random() * 100) + 1);
+      let newMessage = {
+        id: newID,
+        username: this.state.currentUser.name,
+        content: evt.target.value
+      }
+      // console.log(newMessage);
+      let messages = this.state.messages.concat(newMessage);
+      this.setState({ messages: messages });
+      evt.target.value = '';
+    }
+  }
   render() {
     return (
       <div>
@@ -42,9 +57,10 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser}/>
+        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/>
       </div>
     );
   }
 }
+
 export default App;
