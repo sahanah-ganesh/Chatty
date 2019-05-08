@@ -11,16 +11,14 @@ class App extends Component {
       currentUser: { name: 'Bob' },
       messages: []
     };
-    this.addMessage = this.addMessage.bind(this);
-    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  serverSend(message) {
+  serverSend = (message) => {
     this.socket.send(JSON.stringify(message));
     console.log('client to server');
   }
 
-  addMessage(evt) {
+  addMessage = (evt) => {
     if (evt.key === 'Enter') {
       let newMessage = {
         username: this.state.currentUser.name,
@@ -32,7 +30,16 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  addUser = (evt) => {
+    if (evt.key === 'Enter') {
+      console.log(evt.target.value);
+      this.setState({ currentUser: { name: evt.target.value } });
+      console.log(this.state, "state");
+      evt.target.value = '';
+    }
+  }
+
+  componentDidMount = () => {
     console.log('componentDidMount <App />');
     this.socket.onopen = (evt) => {
       console.log('Connected to server');
@@ -41,6 +48,7 @@ class App extends Component {
       const msg = JSON.parse(evt.data);
       console.log('evtdata', evt.data);
       console.log("msg", msg);
+      console.log("this.state.messages", this.state.messages);
       this.setState({messages: this.state.messages.concat(msg.message)})
     }
   }
@@ -52,7 +60,7 @@ class App extends Component {
           <a href="/" className="navbar-brand">Chatty</a>
         </nav>
         <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser} addMessage={this.addMessage}/>
+        <ChatBar addUser={this.addUser} currentUser={this.state.currentUser} addMessage={this.addMessage}/>
       </div>
     );
   }
