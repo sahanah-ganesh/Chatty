@@ -24,18 +24,3 @@ class MessageList extends Component {
   }
 }
 export default MessageList;
-
-
-
-// {
-//   this.props.messages.map(message => {
-//     if (message.type === 'incomingNotification') {
-//       return <Notification key={message.id}
-//         content={message.content} />
-//     } else {
-//       return <Message key={message.id}
-//         chattyUsername={message.username}
-//         chattyMessage={message.content} />
-//     }
-//   })
-// }

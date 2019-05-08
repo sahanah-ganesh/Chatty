@@ -33,11 +33,11 @@ class App extends Component {
 
   addUser = (evt) => {
     let oldUser = this.state.currentUser.name;
-    console.log("oldUser", oldUser);
+    console.log('oldUser', oldUser);
     if (evt.key === 'Enter') {
       console.log(evt.target.value);
       this.setState({ currentUser: { name: evt.target.value } });
-      console.log(this.state, "state");
+      console.log(this.state, 'state');
       let users = {
         type: 'postNotification',
         newUser: evt.target.value,
@@ -67,8 +67,8 @@ class App extends Component {
       //     // show an error in the console if the message type is unknown
       //     throw new Error("Unknown event type " + data.type);
       console.log('evtdata', evt.data);
-      console.log("msg", msg);
-      console.log("this.state.messages", this.state.messages);
+      console.log('msg', msg);
+      console.log('this.state.messages', this.state.messages);
       this.setState({messages: this.state.messages.concat(msg.message)})
     }
   }
@@ -76,8 +76,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <nav className="navbar">
-          <a href="/" className="navbar-brand">Chatty</a>
+        <nav className='navbar'>
+          <a href='/' className='navbar-brand'>Chatty</a>
         </nav>
         <MessageList messages={this.state.messages}/>
         <ChatBar addUser={this.addUser} currentUser={this.state.currentUser} addMessage={this.addMessage}/>
