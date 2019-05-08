@@ -15,9 +15,9 @@ class App extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  sendMessage(message) {
+  serverSend(message) {
     this.socket.send(JSON.stringify(message));
-    console.log('to server from client');
+    console.log('client to server');
   }
 
   addMessage(evt) {
@@ -27,15 +27,21 @@ class App extends Component {
         content: evt.target.value
       }
       console.log(newMessage);
-      this.sendMessage({ message: newMessage });
+      this.serverSend({ message: newMessage });
       evt.target.value = '';
     }
   }
 
   componentDidMount() {
     console.log('componentDidMount <App />');
-    this.socket.onopen = function () {
+    this.socket.onopen = (evt) => {
       console.log('Connected to server');
+    }
+    this.socket.onmessage = (evt) => {
+      const msg = JSON.parse(evt.data);
+      console.log('evtdata', evt.data);
+      console.log("msg", msg);
+      this.setState({messages: this.state.messages.concat(msg.message)})
     }
   }
 
