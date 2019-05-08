@@ -1,3 +1,4 @@
+
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidV1 = require('uuid/v1');
@@ -30,9 +31,17 @@ wss.on('connection', (client) => {
 
   client.on('message', (msg) => {
     const incoming = JSON.parse(msg);
-    console.log("msg", msg);
+    console.log('msg', msg);
     incoming.message.id = uuidV1();
-    console.log("msg id", incoming.message.id);
+    console.log('msg id', incoming.message.id);
+    switch (incoming.message.type) {
+      case 'postNotification':
+        incoming.message.type = 'incomingNotification';
+        break;
+      case 'postMessage':
+        incoming.message.type = 'incomingMessage';
+        break;
+    }
     wss.broadcast(incoming);
   });
 
