@@ -8,44 +8,37 @@ class App extends Component {
     super(props);
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
-      currentUser: { name: 'Bob' }, // optional. if currentUser is not defined, it means the user is Anonymous
-      messages: [
-        {
-          id: 1,
-          username: 'Bob',
-          content: 'Has anyone seen my marbles?',
-        },
-        {
-          id: 2,
-          username: 'Anonymous',
-          content: 'No, I think you lost them. You lost your marbles Bob. You lost them for good.'
-        }
-      ]
-    }
+      currentUser: { name: 'Bob' },
+      messages: []
+    };
     this.addMessage = this.addMessage.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  componentDidMount() {
-    console.log('componentDidMount <App />');
-    this.socket.onopen = function (event) {
-      console.log('Connected to server');
-    };
+  sendMessage(message) {
+    this.socket.send(JSON.stringify(message));
+    console.log('to server from client');
   }
 
   addMessage(evt) {
     if (evt.key === 'Enter') {
-      let newID = Math.floor((Math.random() * 100) + 1);
       let newMessage = {
-        id: newID,
         username: this.state.currentUser.name,
         content: evt.target.value
       }
-      // console.log(newMessage);
-      let messages = this.state.messages.concat(newMessage);
-      this.setState({ messages: messages });
+      console.log(newMessage);
+      this.sendMessage({ message: newMessage });
       evt.target.value = '';
     }
   }
+
+  componentDidMount() {
+    console.log('componentDidMount <App />');
+    this.socket.onopen = function () {
+      console.log('Connected to server');
+    }
+  }
+
   render() {
     return (
       <div>
