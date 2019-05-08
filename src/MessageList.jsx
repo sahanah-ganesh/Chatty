@@ -9,8 +9,8 @@ class MessageList extends Component {
     let messageContent = this.props.messages.map((message) => {
       if (message.type === 'incomingNotification') {
         return (
-          <div className='message system'>
-            <span className='notification-content' key={message.id} content={message.content}>{message.oldUser} changed their name to {message.newUser}</span>
+          <div key={message.id} className='message system'>
+            <span className='notification-content' content={message.content}>{message.oldUser} changed their name to {message.newUser}</span>
           </div>
         );
       }

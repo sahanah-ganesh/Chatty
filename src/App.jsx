@@ -9,7 +9,8 @@ class App extends Component {
     this.socket = new WebSocket('ws://localhost:3001/');
     this.state = {
       currentUser: { name: 'Bob' },
-      messages: []
+      messages: [],
+      users: 0
     };
   }
 
@@ -55,6 +56,11 @@ class App extends Component {
       console.log('Connected to server');
     }
     this.socket.onmessage = (evt) => {
+
+      if (evt.data == parseInt(evt.data)) {
+        return this.setState({ users: evt.data })
+      }
+
       const msg = JSON.parse(evt.data);
       console.log('evtdata', evt.data);
       console.log('msg', msg);
@@ -68,6 +74,7 @@ class App extends Component {
       <div>
         <nav className='navbar'>
           <a href='/' className='navbar-brand'>Chatty</a>
+          <span>{this.state.users} users online</span>
         </nav>
         <MessageList messages={this.state.messages}/>
         <ChatBar addUser={this.addUser} currentUser={this.state.currentUser} addMessage={this.addMessage}/>
