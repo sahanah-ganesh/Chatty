@@ -1,4 +1,3 @@
-
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuidV1 = require('uuid/v1');
@@ -21,25 +20,24 @@ const wss = new SocketServer({ server });
 wss.on('connection', (client) => {
   console.log('Client connected');
 
+  // Send user count for each client
   wss.clients.forEach((client) => {
     client.send(wss.clients.size);
   });
 
-  //Broadcast to all
+  // Broadcast to all
   wss.broadcast = function broadcast(data) {
 
     wss.clients.forEach(function each(client) {
       client.send(JSON.stringify(data));
-      console.log('data', data);
     });
   };
 
+  // Generate unique ID and send back after changing message type (notification for username change, message for new message)
   client.on('message', (msg) => {
 
     const incoming = JSON.parse(msg);
-    console.log('msg', msg);
     incoming.message.id = uuidV1();
-    console.log('msg id', incoming.message.id);
     switch (incoming.message.type) {
       case 'postNotification':
         incoming.message.type = 'incomingNotification';
@@ -55,6 +53,7 @@ wss.on('connection', (client) => {
   client.on('close', () => {
     console.log('Client disconnected');
 
+    // Update user count when client disconnects
     wss.clients.forEach((client) => {
       client.send(wss.clients.size);
     });
