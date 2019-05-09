@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
 
+// Set state with default currentUser, empty messages and user count
 class App extends Component {
   constructor(props) {
     super(props);
@@ -10,65 +10,60 @@ class App extends Component {
     this.state = {
       currentUser: { name: 'Bob' },
       messages: [],
-      users: 0
+      users: 0,
     };
   }
 
-  serverSend = (message) => {
-    this.socket.send(JSON.stringify(message));
-    console.log('client to server');
-  }
-
+  // User clicks enter in message box, create object of message, username, as postMessage
   addMessage = (evt) => {
     if (evt.key === 'Enter') {
       let newMessage = {
         type: 'postMessage',
         username: this.state.currentUser.name,
-        content: evt.target.value
-      }
-      console.log(newMessage);
+        content: evt.target.value,
+      };
+      // Call function to send object to server
       this.serverSend({ message: newMessage });
       evt.target.value = '';
-    }
+    };
   }
 
+  // User clicks enter in name box, create object of old username, new username, as postNotification
   addUser = (evt) => {
     let oldUser = this.state.currentUser.name;
-    console.log('oldUser', oldUser);
     if (evt.key === 'Enter') {
-      console.log(evt.target.value);
       this.setState({ currentUser: { name: evt.target.value } });
-      console.log(this.state, 'state');
       let users = {
         type: 'postNotification',
         newUser: evt.target.value,
         oldUser: oldUser
       };
+      // Call function to send object to server
       this.serverSend({ message: users });
-      console.log('users', users);
       evt.target.value = '';
-    }
+    };
   }
 
+  // Function to send message data to server stringified
+  serverSend = (message) => {
+    this.socket.send(JSON.stringify(message));
+  }
+
+  // Page loaded, then client connected to server
   componentDidMount = () => {
-    console.log('componentDidMount <App />');
     this.socket.onopen = (evt) => {
-      console.log('Connected to server');
     }
+    // Client receives data from server and checks for number. Sets state for user count with number
     this.socket.onmessage = (evt) => {
-
       if (evt.data == parseInt(evt.data)) {
-        return this.setState({ users: evt.data })
+        return this.setState({ users: evt.data });
       }
-
+      // Transform server data back to JSON and set state with new messages
       const msg = JSON.parse(evt.data);
-      console.log('evtdata', evt.data);
-      console.log('msg', msg);
-      console.log('this.state.messages', this.state.messages);
-      this.setState({messages: this.state.messages.concat(msg.message)})
-    }
+      this.setState({messages: this.state.messages.concat(msg.message)});
+    };
   }
-
+  // Pass props and state to children, render page
   render() {
     return (
       <div>
@@ -80,7 +75,7 @@ class App extends Component {
         <ChatBar addUser={this.addUser} currentUser={this.state.currentUser} addMessage={this.addMessage}/>
       </div>
     );
-  }
+  };
 }
 
 export default App;

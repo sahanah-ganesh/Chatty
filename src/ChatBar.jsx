@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+// Render chatbar with username and message input fields that trigger event on enter
 class ChatBar extends Component {
   render() {
     return (
@@ -8,6 +9,6 @@ class ChatBar extends Component {
         <input onKeyUp={this.props.addMessage} className='chatbar-message' placeholder='Type a message and hit ENTER' />
       </footer>
     );
-  }
+  };
 }
 export default ChatBar;

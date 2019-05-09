@@ -1,11 +1,13 @@
-React Boilerplate
+Chatty App
 =====================
 
-A minimal and light dev environment for ReactJS.
+A client-side SPA (single-page app) built with ReactJS, based on HTML and CSS. Contains a chat log displaying messages and notifications. Contains an input field to change name and input field to send messages.
+
+This client-side app communicates with a server via WebSockets for multi-user real-time updates. No persistent database is involved; the focus is on the client-side experience.
 
 ### Usage
 
-Clone the boilerplate and create your own git repo.
+Clone this repo, install the dependencies, start the server:
 
 ```
 git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
@@ -22,12 +24,13 @@ npm install
 npm start
 open http://localhost:3000
 ```
-
-### Static Files
-
-You can store static files like images, fonts, etc in the `build` folder.
-
-For example, if you copy a file called my_image.png into the build folder you can access it using `http://localhost:3000/build/my_image.png`.
+Then...
+```
+cd chatty_server
+npm install
+npm start
+open http://localhost:3000
+```
 
 ### Linting
 
@@ -43,5 +46,14 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+
+### Screenshots
+
+!['One user connected'](https://....)
+
+!['Two users connected'](https://...)
+
+!['User changes name'](https://...)
 
 
