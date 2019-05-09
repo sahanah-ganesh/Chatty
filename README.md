@@ -50,10 +50,12 @@ npm run lint
 
 ### Screenshots
 
-!['One user connected'](https://....)
+!['One user connected'](https://github.com/sahanah-ganesh/chatty/blob/master/docs/client%20connects.png)
 
-!['Two users connected'](https://...)
+!['Two users connected'](https://github.com/sahanah-ganesh/chatty/blob/master/docs/new%20client%20connects.png)
 
-!['User changes name'](https://...)
+!['User changes name'](https://github.com/sahanah-ganesh/chatty/blob/master/docs/two%20users%20chatting.png)
+
+!['User 2 leaves'](https://github.com/sahanah-ganesh/chatty/blob/master/docs/user%202%20leaves.png)
 
 
