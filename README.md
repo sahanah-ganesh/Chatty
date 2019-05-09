@@ -10,7 +10,6 @@ This client-side app communicates with a server via WebSockets for multi-user re
 Clone this repo, install the dependencies, start the server:
 
 ```
-git clone git@github.com:lighthouse-labs/react-simple-boilerplate.git
 cd react-simple-boilerplate
 git remote rm origin
 git remote add origin [YOUR NEW REPOSITORY]
